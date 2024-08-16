@@ -10,6 +10,7 @@ import MentorStudentForm from "./components/MentorStudentForm";
 import Home from "./components/Home";
 import Mentors from "./components/Mentors";
 import Zoom from "./components/Zoom";
+import MentorReviewForm from "./components/PostCallForm";
 // import './App.css'
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
         <Route path="/zoom" element={<Zoom />} />
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<MentorStudentForm />} />
+        <Route path="/reviewform" element={<MentorReviewForm />} />
       </Routes>
     </Router>
   );
