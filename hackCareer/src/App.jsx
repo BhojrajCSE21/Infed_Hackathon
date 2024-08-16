@@ -1,15 +1,7 @@
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  Link,
-} from "react-router-dom";
-import Zoom from "./components/Zoom";
-import Home from "./components/Home";
-import Mentors from "./components/Mentors";
-import "./App.css";
+import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import MentorStudentForm from './components/MentorStudentForm'
+// import './App.css'
 
 function App() {
   return (
@@ -46,11 +38,9 @@ function App() {
       </header>
 
       <Routes>
+        
         <Route path="/" element={<Home />} />
-        {/* <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />}/> */}
-        <Route path="/mentors" element={<Mentors />} />
-        <Route path="/zoom" element={<Zoom />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );
