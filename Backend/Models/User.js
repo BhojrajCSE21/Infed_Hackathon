@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-
 
 const userSchema = new Schema({
   name: {
@@ -16,7 +15,19 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  highQualification: {
+    type: String,
+    required: true, // Make it required or optional based on your needs
+  },
+  collegeType: {
+    type: String,
+    required: true, // Make it required or optional based on your needs
+  },
+  phoneNumber: {
+    type: String,
+    required: true, // Make it required or optional based on your needs
   }
 });
 
-export default mongoose.model("prototype", userSchema);
+export default mongoose.model('User', userSchema);
