@@ -1,7 +1,7 @@
 function Mentors() {
   return (
     <div>
-      <h1>Mentors page</h1>
+      <h1></h1>
     </div>
   );
 }
