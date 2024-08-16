@@ -2,4 +2,4 @@
 
 ## Statement: 
 
-## Idea
+## Idea: 
