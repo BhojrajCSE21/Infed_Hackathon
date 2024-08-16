@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import configs from "./configs.js";
 import router from "./Routes/user-routes.js";
-import routers from "./Routes/course-routes.js";
 import routerss from "./Routes/teacher-routes.js";
 
 const app = express();
@@ -11,7 +10,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/login/user", router);
-app.use("/courses", routers);
 app.use("/teacher", routerss);
 
 
