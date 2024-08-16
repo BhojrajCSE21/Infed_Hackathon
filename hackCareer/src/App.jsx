@@ -1,11 +1,4 @@
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import MentorStudentForm from "./components/MentorStudentForm";
 import Home from "./components/Home";
 import Mentors from "./components/Mentors";
@@ -17,13 +10,20 @@ function App() {
     <Router>
       <header className="bg-slate-100 w-full p-4 flex justify-between items-center">
         <div className="flex items-center">
-          <img src="./Logo.png" alt="something" />
+          <img
+            className="h-10"
+            src="https://res.cloudinary.com/dmvdn1dud/image/upload/v1723807023/teachers/photographs/dr8jzegrw6inz3oiniti.png"
+            alt="something"
+          />
           {/* <span className="text-xl font-bold">My App</span> */}
         </div>
         <nav className="font-semibold">
           <ul className="flex space-x-6">
             <li>
-              <Link to="/register" className="text-gray-700 hover:text-gray-900">
+              <Link
+                to="/register"
+                className="text-gray-700 hover:text-gray-900"
+              >
                 Register
               </Link>
             </li>

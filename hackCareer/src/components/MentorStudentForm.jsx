@@ -2,6 +2,72 @@ import React, { useState } from "react";
 
 function MentorStudentForm() {
   const [activeTab, setActiveTab] = useState("mentor");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    highestQualification: "",
+    totalExperience: "",
+    currentProfile: "",
+    currentCompanyName: "",
+    domainExpertise: "",
+    sectorExpertise: "",
+    mentorType: "",
+    instituteType: "",
+    interests: [],
+    availabilityDay: "",
+    availabilityTime: "",
+    commitmentTimePerWeek: "",
+    linkedInProfile: "",
+    profileSummary: "",
+    password: "",
+  });
+  const [photograph, setPhotograph] = useState(null);
+  const [resume, setResume] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    if (name === "photograph") setPhotograph(files[0]);
+    if (name === "resume") setResume(files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = new FormData();
+    
+    // Append text fields
+    for (const key in formData) {
+      form.append(key, formData[key]);
+    }
+    
+    // Append files
+    if (photograph) form.append("photograph", photograph);
+    if (resume) form.append("resume", resume);
+
+    try {
+      const response = await fetch("http://localhost:5500/teacher/register", {
+        method: "POST",
+        body: form,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        // Clear form or handle success
+      } else {
+        alert(result.message);
+        // Handle error
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <div className="min-h-screen p-4 flex items-center justify-center bg-gray-900 text-white">
@@ -27,20 +93,34 @@ function MentorStudentForm() {
         </div>
 
         {/* Form Content */}
-        {activeTab === "mentor" ? <MentorForm /> : <StudentForm />}
+        {activeTab === "mentor" ? <MentorForm 
+          formData={formData}
+          photograph={photograph}
+          resume={resume}
+          handleChange={handleChange}
+          handleFileChange={handleFileChange}
+          handleSubmit={handleSubmit}
+        /> : <StudentForm 
+          formData={formData}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />}
       </div>
     </div>
   );
 }
 
-function MentorForm() {
+function MentorForm({ formData, photograph, resume, handleChange, handleFileChange, handleSubmit }) {
   return (
     <div className="p-2">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label className="block text-sm font-medium">Your Name*</label>
           <input
             type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -49,6 +129,9 @@ function MentorForm() {
           <label className="block text-sm font-medium">Email*</label>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -59,6 +142,9 @@ function MentorForm() {
           </label>
           <input
             type="text"
+            name="highestQualification"
+            value={formData.highestQualification}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -67,6 +153,9 @@ function MentorForm() {
           <label className="block text-sm font-medium">Phone Number*</label>
           <input
             type="tel"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -77,6 +166,9 @@ function MentorForm() {
           </label>
           <input
             type="number"
+            name="totalExperience"
+            value={formData.totalExperience}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -85,6 +177,9 @@ function MentorForm() {
           <label className="block text-sm font-medium">Current Profile*</label>
           <input
             type="text"
+            name="currentProfile"
+            value={formData.currentProfile}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -95,6 +190,9 @@ function MentorForm() {
           </label>
           <input
             type="text"
+            name="currentCompanyName"
+            value={formData.currentCompanyName}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -105,6 +203,9 @@ function MentorForm() {
           </label>
           <input
             type="text"
+            name="domainExpertise"
+            value={formData.domainExpertise}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -115,6 +216,9 @@ function MentorForm() {
           </label>
           <input
             type="text"
+            name="sectorExpertise"
+            value={formData.sectorExpertise}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
@@ -124,6 +228,9 @@ function MentorForm() {
             Who do you want to mentor?*
           </label>
           <select
+            name="mentorType"
+            value={formData.mentorType}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           >
@@ -133,44 +240,127 @@ function MentorForm() {
             <option value="other-students">Other Students</option>
           </select>
         </div>
-        {/* Additional fields go here following the same pattern */}
-        <div>
-          <label className="block text-sm font-medium">LinkedIn Profile</label>
-          <input
-            type="url"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          />
-        </div>
         <div>
           <label className="block text-sm font-medium">
-            Attach Your Photograph (png, jpg, jpeg; Max: 10MB)*
+            College Type*
           </label>
+          <select
+            name="instituteType"
+            value={formData.instituteType}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          >
+            <option value="national-institute">National Institute</option>
+            <option value="tier1">Tier 1</option>
+            <option value="tier2-tier3">Tier 2 & Tier 3</option>
+            <option value="all">All of the Above</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Interests*</label>
           <input
-            type="file"
-            accept="image/png, image/jpeg"
+            type="text"
+            name="interests"
+            value={formData.interests}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             required
           />
         </div>
         <div>
           <label className="block text-sm font-medium">
-            Attach Resume (pdf, doc, docx; Max: 5MB)
+            Available Days*
           </label>
           <input
-            type="file"
-            accept=".pdf,.doc,.docx"
+            type="text"
+            name="availabilityDay"
+            value={formData.availabilityDay}
+            onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
           />
         </div>
         <div>
           <label className="block text-sm font-medium">
-            Profile Summary (Publicly Visible)
+            Available Time Slot*
           </label>
-          <textarea className="mt-1 block w-full p-2 border border-gray-300 rounded-md"></textarea>
+          <input
+            type="text"
+            name="availabilityTime"
+            value={formData.availabilityTime}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">
+            Commitment Time Per Week*
+          </label>
+          <input
+            type="text"
+            name="commitmentTimePerWeek"
+            value={formData.commitmentTimePerWeek}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">
+            LinkedIn Profile Link
+          </label>
+          <input
+            type="url"
+            name="linkedInProfile"
+            value={formData.linkedInProfile}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Profile Summary*</label>
+          <textarea
+            name="profileSummary"
+            value={formData.profileSummary}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Photograph</label>
+          <input
+            type="file"
+            name="photograph"
+            onChange={handleFileChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Resume</label>
+          <input
+            type="file"
+            name="resume"
+            onChange={handleFileChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Password*</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
         </div>
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-black text-white rounded-md"
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
         >
           Submit
         </button>
@@ -179,62 +369,42 @@ function MentorForm() {
   );
 }
 
-function StudentForm() {
+function StudentForm({ formData, handleChange, handleSubmit }) {
   return (
-    <form className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium">Your Name*</label>
-        <input
-          type="text"
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Email*</label>
-        <input
-          type="email"
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">
-          Highest Qualification*
-        </label>
-        <input
-          type="text"
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Phone Number*</label>
-        <input
-          type="tel"
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">College Type*</label>
-        <select
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          required
+    <div className="p-2">
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* Student-specific fields */}
+        <div>
+          <label className="block text-sm font-medium">Your Name*</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Email*</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        {/* Other student-specific fields */}
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
         >
-          <option value="national-institute">National Institute</option>
-          <option value="tier1">Tier 1</option>
-          <option value="tier2-tier3">Tier 2 & Tier 3</option>
-          <option value="all">All of the Above</option>
-        </select>
-      </div>
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-black text-white rounded-md"
-      >
-        Submit
-      </button>
-    </form>
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
