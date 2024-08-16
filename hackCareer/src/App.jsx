@@ -1,6 +1,15 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
-import MentorStudentForm from './components/MentorStudentForm'
+import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  Link,
+} from "react-router-dom";
+import MentorStudentForm from "./components/MentorStudentForm";
+import Home from "./components/Home";
+import Mentors from "./components/Mentors";
+import Zoom from "./components/Zoom";
 // import './App.css'
 
 function App() {
@@ -14,8 +23,8 @@ function App() {
         <nav className="font-semibold">
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="text-gray-700 hover:text-gray-900">
-                Home
+              <Link to="/register" className="text-gray-700 hover:text-gray-900">
+                Register
               </Link>
             </li>
             <li>
@@ -38,9 +47,10 @@ function App() {
       </header>
 
       <Routes>
-        
+        <Route path="/mentors" element={<Mentors />} />
+        <Route path="/zoom" element={<Zoom />} />
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/register" element={<MentorStudentForm />} />
       </Routes>
     </Router>
   );
