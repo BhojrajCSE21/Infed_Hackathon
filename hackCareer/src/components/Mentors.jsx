@@ -10,7 +10,7 @@ function Mentors() {
         profileSummary: 'John has over 20 years of experience in software development and has mentored numerous students and professionals in the field of computer science. He specializes in AI and machine learning.',
       };
   return (
-    <div>
+    <div className="h-fit w-screen flex justify-center gap-4 p-2">
       <MentorCard mentor={mentorData}/>
     </div>
   );

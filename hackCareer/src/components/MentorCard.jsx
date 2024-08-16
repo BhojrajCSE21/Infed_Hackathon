@@ -22,13 +22,13 @@ function MentorCard({ mentor }) {
         <p className="text-gray-700">{mentor.profileSummary}</p>
       </div>
       <div className="flex justify-between items-center mt-4">
-        <button
+      <button
           onClick={toggleExpand}
-          className="text-blue-500 hover:text-blue-700 focus:outline-none"
+          className="text-gray-900 hover:text-gray-700 focus:outline-none"
         >
           {isExpanded ? 'Collapse' : 'Expand'}
         </button>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button className="bg-gray-900 text-white px-4 py-2 rounded hover:bg-gray-700">
           Book
         </button>
       </div>

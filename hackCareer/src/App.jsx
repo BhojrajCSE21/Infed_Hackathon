@@ -23,8 +23,8 @@ function App() {
         <nav className="font-semibold">
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="text-gray-700 hover:text-gray-900">
-                Home
+              <Link to="/register" className="text-gray-700 hover:text-gray-900">
+                Register
               </Link>
             </li>
             <li>
@@ -50,6 +50,7 @@ function App() {
         <Route path="/mentors" element={<Mentors />} />
         <Route path="/zoom" element={<Zoom />} />
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<MentorStudentForm />} />
       </Routes>
     </Router>
   );
